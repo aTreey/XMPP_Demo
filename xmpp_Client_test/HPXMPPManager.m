@@ -12,7 +12,7 @@
 #import "XMPPLogging.h"
 
 
-@interface HPXMPPManager ()<XMPPStreamDelegate, XMPPReconnectDelegate>
+@interface HPXMPPManager ()<XMPPStreamDelegate, XMPPReconnectDelegate, XMPPAutoPingDelegate>
 @property (nonatomic, copy)NSString *password;
 @property (nonatomic, copy)XMPPReconnect *xmppReconnect;
 @property (nonatomic, copy)XMPPAutoPing *xmppAutoping;
@@ -77,6 +77,25 @@ static HPXMPPManager *_sharmanager;
 }
 
 
+// 心跳检测模块
+- (XMPPAutoPing *)xmppAutoping {
+    
+    if (!_xmppAutoping) {
+        
+        _xmppAutoping = [[XMPPAutoPing alloc] initWithDispatchQueue:dispatch_get_main_queue()];
+        
+        // 设置ping 的时间
+        _xmppAutoping.pingInterval = 3.0;
+        
+        //pingTimeout 超时
+        _xmppAutoping.pingTimeout = 5;
+        
+        // 设置代理
+        [_xmppAutoping addDelegate:self delegateQueue:dispatch_get_main_queue()];
+    }
+    return _xmppAutoping;
+}
+
 //login
 - (void)loginWithJID:(XMPPJID *)jid password:(NSString *)password {
     
@@ -91,15 +110,20 @@ static HPXMPPManager *_sharmanager;
     
     // 激活模块,在登录的时候就激活
     [self activateFuncation];
+    
 }
 
 // 使用stream 来激活自动重连
 - (void)activateFuncation {
     
     [self.xmppReconnect activate:self.xmppStream];
+    [self.xmppAutoping activate:self.xmppStream];
 }
 
-#pragma mark -- XMPPStream的代理方法
+#pragma mark -- XMPPReconnect 代理方法
+
+
+#pragma mark -- XMPPStream  代理方法
 // 链接到服务器的时候调用
 - (void)xmppStreamDidConnect:(XMPPStream *)sender {
     
@@ -135,6 +159,19 @@ static HPXMPPManager *_sharmanager;
     
     
     NSLog(@"====发送后====");
+}
+
+
+#pragma mark -- autoPing 代理方法
+- (void)xmppAutoPingDidSendPing:(XMPPAutoPing *)sender {
+    NSLog(@"%s", __func__);
+}
+- (void)xmppAutoPingDidReceivePong:(XMPPAutoPing *)sender {
+    NSLog(@"%s", __func__);
+}
+
+- (void)xmppAutoPingDidTimeout:(XMPPAutoPing *)sender {
+    NSLog(@"%s", __func__);
 }
 
 @end
