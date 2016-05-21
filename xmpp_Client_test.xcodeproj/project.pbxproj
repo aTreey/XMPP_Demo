@@ -157,6 +157,9 @@
 		175BFF9C1CF03A17009CC84D /* DDXMLNode.m in Sources */ = {isa = PBXBuildFile; fileRef = 175BFECE1CF03A17009CC84D /* DDXMLNode.m */; };
 		175BFF9D1CF03A17009CC84D /* build-libidn.sh in Resources */ = {isa = PBXBuildFile; fileRef = 175BFED21CF03A17009CC84D /* build-libidn.sh */; };
 		175BFF9E1CF03A17009CC84D /* libidn.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 175BFED41CF03A17009CC84D /* libidn.a */; };
+		175BFFA11CF075D0009CC84D /* HPContactViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 175BFFA01CF075D0009CC84D /* HPContactViewController.m */; };
+		175BFFA41CF0761C009CC84D /* HPRecentlyController.m in Sources */ = {isa = PBXBuildFile; fileRef = 175BFFA31CF0761C009CC84D /* HPRecentlyController.m */; };
+		175BFFA71CF07765009CC84D /* HPChatViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 175BFFA61CF07765009CC84D /* HPChatViewController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -468,6 +471,12 @@
 		175BFED41CF03A17009CC84D /* libidn.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libidn.a; sourceTree = "<group>"; };
 		175BFED51CF03A17009CC84D /* stringprep.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = stringprep.h; sourceTree = "<group>"; };
 		175BFF111CF03A17009CC84D /* XMPPFramework.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XMPPFramework.h; sourceTree = "<group>"; };
+		175BFF9F1CF075D0009CC84D /* HPContactViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HPContactViewController.h; sourceTree = "<group>"; };
+		175BFFA01CF075D0009CC84D /* HPContactViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HPContactViewController.m; sourceTree = "<group>"; };
+		175BFFA21CF0761C009CC84D /* HPRecentlyController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HPRecentlyController.h; sourceTree = "<group>"; };
+		175BFFA31CF0761C009CC84D /* HPRecentlyController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HPRecentlyController.m; sourceTree = "<group>"; };
+		175BFFA51CF07765009CC84D /* HPChatViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HPChatViewController.h; sourceTree = "<group>"; };
+		175BFFA61CF07765009CC84D /* HPChatViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HPChatViewController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -511,6 +520,12 @@
 				175BFD0D1CF02F83009CC84D /* AppDelegate.m */,
 				175BFD0F1CF02F83009CC84D /* ViewController.h */,
 				175BFD101CF02F83009CC84D /* ViewController.m */,
+				175BFF9F1CF075D0009CC84D /* HPContactViewController.h */,
+				175BFFA01CF075D0009CC84D /* HPContactViewController.m */,
+				175BFFA21CF0761C009CC84D /* HPRecentlyController.h */,
+				175BFFA31CF0761C009CC84D /* HPRecentlyController.m */,
+				175BFFA51CF07765009CC84D /* HPChatViewController.h */,
+				175BFFA61CF07765009CC84D /* HPChatViewController.m */,
 				175BFD121CF02F83009CC84D /* Main.storyboard */,
 				175BFD151CF02F83009CC84D /* Assets.xcassets */,
 				175BFD171CF02F84009CC84D /* LaunchScreen.storyboard */,
@@ -1987,9 +2002,11 @@
 				175BFF281CF03A17009CC84D /* XMPPFileTransfer.m in Sources */,
 				175BFF951CF03A17009CC84D /* DDContextFilterLogFormatter.m in Sources */,
 				175BFF751CF03A17009CC84D /* XMPPMessageDeliveryReceipts.m in Sources */,
+				175BFFA41CF0761C009CC84D /* HPRecentlyController.m in Sources */,
 				175BFF691CF03A17009CC84D /* XMPPCapsCoreDataStorageObject.m in Sources */,
 				175BFF121CF03A17009CC84D /* XMPPAnonymousAuthentication.m in Sources */,
 				175BFF561CF03A17009CC84D /* XMPPvCardTempLabel.m in Sources */,
+				175BFFA71CF07765009CC84D /* HPChatViewController.m in Sources */,
 				175BFF151CF03A17009CC84D /* XMPPDigestMD5Authentication.m in Sources */,
 				175BFF321CF03A17009CC84D /* XMPPUserCoreDataStorageObject.m in Sources */,
 				175BFF681CF03A17009CC84D /* XMPPCapabilitiesCoreDataStorage.m in Sources */,
@@ -2059,6 +2076,7 @@
 				175BFF471CF03A17009CC84D /* XMPPRoomMessageMemoryStorageObject.m in Sources */,
 				175BFF921CF03A17009CC84D /* DDFileLogger.m in Sources */,
 				175BFF911CF03A17009CC84D /* DDASLLogger.m in Sources */,
+				175BFFA11CF075D0009CC84D /* HPContactViewController.m in Sources */,
 				175BFF741CF03A17009CC84D /* XMPPMessage+XEP_0184.m in Sources */,
 				175BFF181CF03A17009CC84D /* XMPPXFacebookPlatformAuthentication.m in Sources */,
 				175BFF811CF03A17009CC84D /* XMPPMessage+XEP_0224.m in Sources */,
