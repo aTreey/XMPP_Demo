@@ -65,17 +65,17 @@
     // 刷新数据源
     [self.tableView reloadData];
     
-    // 添加代理
-    [[HPXMPPManager sharedXMPPManager].xmppRoster addDelegate:self delegateQueue:dispatch_get_main_queue()];
+//    // 添加代理
+//    [[HPXMPPManager sharedXMPPManager].xmppRoster addDelegate:self delegateQueue:dispatch_get_main_queue()];
 }
 
 #pragma mark -- 添加好友
 - (IBAction)addFriendsBtnDidClick:(id)sender {
     
 //    // 添加代理
-//    [[HPXMPPManager sharedXMPPManager].xmppRoster addDelegate:self delegateQueue:dispatch_get_main_queue()];
+    [[HPXMPPManager sharedXMPPManager].xmppRoster addDelegate:self delegateQueue:dispatch_get_main_queue()];
     
-    [[HPXMPPManager sharedXMPPManager].xmppRoster addUser:[XMPPJID jidWithUser:@"wang2" domain:@"itheima.cn" resource:nil] withNickname:@"电脑message1"];
+    [[HPXMPPManager sharedXMPPManager].xmppRoster addUser:[XMPPJID jidWithUser:@"wang1" domain:@"itheima.cn" resource:nil] withNickname:@"电脑message1"];
 }
 
 #pragma mark -- XMPPRosterDelegate
@@ -84,8 +84,8 @@
     // andAddToRoster : 添加到数据库
 
     (XMPPPresence *)presence {
-    [[HPXMPPManager sharedXMPPManager].xmppRoster acceptPresenceSubscriptionRequestFrom:[XMPPJID jidWithUser:@"wnag2" domain:@"itheima.cn" resource:nil] andAddToRoster:YES];
-    
+//    [[HPXMPPManager sharedXMPPManager].xmppRoster acceptPresenceSubscriptionRequestFrom:[XMPPJID jidWithUser:@"wnag2" domain:@"itheima.cn" resource:nil] andAddToRoster:YES];
+//    
 }
 
 // 2, 展示数据
@@ -110,6 +110,21 @@
     
     return cell;
 }
+
+#pragma mark -- 删除好友
+// 实现代理方法让cell 进入可编辑状态
+- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
+    
+    // 判断editingStyle 的样式
+    if (editingStyle == UITableViewCellEditingStyleDelete) {
+        
+       XMPPUserCoreDataStorageObject *object = self.contactDataList[indexPath.row];
+        // 更具选取对应的行 删除用户
+        [[HPXMPPManager sharedXMPPManager].xmppRoster removeUser:object.jid];
+    }
+    
+}
+
 
 #pragma mark - TalbeViewdelegate
 // 设置行高

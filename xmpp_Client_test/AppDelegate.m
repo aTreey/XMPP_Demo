@@ -17,7 +17,7 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     // login
-    [[HPXMPPManager sharedXMPPManager] loginWithJID:[XMPPJID jidWithUser:@"zhang2" domain:@"itheima.cn" resource:nil] password:@"2"];
+    [[HPXMPPManager sharedXMPPManager] loginWithJID:[XMPPJID jidWithUser:@"zhang1" domain:@"itheima.cn" resource:nil] password:@"1"];
     return YES;
 }
 
