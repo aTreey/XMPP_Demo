@@ -7,6 +7,10 @@
 //
 
 #import "HPXMPPManager.h"
+#import "DDLog.h"
+#import "DDTTYLogger.h"
+#import "XMPPLogging.h"
+
 
 @interface HPXMPPManager ()<XMPPStreamDelegate>
 @property (nonatomic, copy)NSString *password;
@@ -21,6 +25,9 @@ static HPXMPPManager *_sharmanager;
     dispatch_once(&onceToken, ^{
         
         _sharmanager = [[self alloc] init];
+        
+        // 打印日志
+        [DDLog addLogger:[DDTTYLogger sharedInstance] withLogLevel:XMPP_LOG_FLAG_SEND_RECV];
     });
     return _sharmanager;
 }
