@@ -16,7 +16,7 @@
 @property (nonatomic, copy)NSString *password;
 @property (nonatomic, copy)XMPPReconnect *xmppReconnect;
 @property (nonatomic, copy)XMPPAutoPing *xmppAutoping;
-
+@property (nonatomic, copy)XMPPMessageArchiving *xmppMessageArchiving;
 
 @end
 
@@ -98,7 +98,7 @@ static HPXMPPManager *_sharmanager;
     return _xmppAutoping;
 }
 
-// 好友列表
+// 好友列表模块
 - (XMPPRoster *)xmppRoster {
     
     if (!_xmppRoster) {
@@ -113,6 +113,18 @@ static HPXMPPManager *_sharmanager;
         
     }
     return _xmppRoster;
+}
+
+
+#pragma mark -- 消息模块
+- (XMPPMessageArchiving *)xmppMessageArchiving {
+    
+    if (!_xmppMessageArchiving) {
+        _xmppMessageArchiving = [[XMPPMessageArchiving alloc] initWithMessageArchivingStorage:[XMPPMessageArchivingCoreDataStorage sharedInstance] dispatchQueue:dispatch_get_main_queue()];
+        // 暂时不需要设置参数 和代理
+        
+    }
+    return _xmppMessageArchiving;
 }
 
 //login
@@ -136,8 +148,9 @@ static HPXMPPManager *_sharmanager;
 - (void)activateFuncation {
     
     [self.xmppReconnect activate:self.xmppStream];
-//    [self.xmppAutoping activate:self.xmppStream];
-    [self.xmppRoster activate:self.xmppStream];
+//    [self.xmppAutoping activate:self.xmppStream]; // 心跳模块激活
+    [self.xmppRoster activate:self.xmppStream]; // 好友列表模块激活
+    [self.xmppMessageArchiving activate:self.xmppStream]; // 消息模块激活
 }
 
 #pragma mark -- XMPPReconnect 代理方法

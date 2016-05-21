@@ -8,6 +8,6 @@
 
 #import <UIKit/UIKit.h>
 
-@interface HPChatViewController : UITableViewController
+@interface HPChatViewController : UIViewController
 
 @end

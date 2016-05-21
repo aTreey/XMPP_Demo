@@ -37,6 +37,10 @@
 #import "XMPPRosterCoreDataStorage.h"// 好友数据存储器
 #import "XMPPUserCoreDataStorageObject.h" // 实体
 
+// 消息模块
+#import "XMPPMessageArchiving.h"
+#import "XMPPMessageArchivingCoreDataStorage.h"
+#import "XMPPMessageArchiving_Message_CoreDataObject.h"
 // List the modules you're using here:
 // (the following may not be a complete list)
 

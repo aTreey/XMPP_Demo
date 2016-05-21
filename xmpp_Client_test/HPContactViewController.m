@@ -78,7 +78,7 @@
     [[HPXMPPManager sharedXMPPManager].xmppRoster addUser:[XMPPJID jidWithUser:@"wang1" domain:@"itheima.cn" resource:nil] withNickname:@"电脑message1"];
 }
 
-#pragma mark -- XMPPRosterDelegate
+#pragma mark -- 添加好友接到授权时执行
 
 - (void)xmppRoster:(XMPPRoster *)sender didReceivePresenceSubscriptionRequest:
     // andAddToRoster : 添加到数据库
@@ -126,14 +126,12 @@
 }
 
 
-#pragma mark - TalbeViewdelegate
+#pragma mark - cell 行高
 // 设置行高
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
     
     return 60;
 }
-
-
 
 
 // 懒加载
