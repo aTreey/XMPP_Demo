@@ -29,6 +29,14 @@
 
 // 心跳检测
 #import "XMPPAutoPing.h"
+
+
+
+// 好友列表模块
+#import "XMPPRoster.h" // 好友列表
+#import "XMPPRosterCoreDataStorage.h"// 好友数据存储器
+#import "XMPPUserCoreDataStorageObject.h" // 实体
+
 // List the modules you're using here:
 // (the following may not be a complete list)
 

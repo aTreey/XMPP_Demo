@@ -8,91 +8,107 @@
 
 #import "HPContactViewController.h"
 
-@interface HPContactViewController ()
 
+@interface HPContactViewController ()<NSFetchedResultsControllerDelegate>
+@property (nonatomic, strong) NSFetchedResultsController *fetchedResultsController;
+@property (nonatomic, strong) NSArray *contactDataList;
 @end
 
 @implementation HPContactViewController
 
+// 懒加载
+- (NSFetchedResultsController *)fetchedResultsController {
+    
+    if (!_fetchedResultsController) {
+        // 查询请求
+        NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
+        
+        // 实体
+        // XMPPUserCoreDataStorageObject: 是实体对象
+        // XMPPRosterCoreDataStorage : 数据存储器
+        fetchRequest.entity = [NSEntityDescription entityForName:@"XMPPUserCoreDataStorageObject"inManagedObjectContext:[XMPPRosterCoreDataStorage sharedInstance].mainThreadManagedObjectContext];
+        // 谓词
+        fetchRequest.predicate = [NSPredicate predicateWithFormat:@"subscription = %@", @"both"];
+        
+        // 排序
+        NSSortDescriptor *sort = [NSSortDescriptor sortDescriptorWithKey:@"jidStr" ascending:YES];
+        fetchRequest.sortDescriptors = @[sort];
+        
+        // 创建查询控制器
+        _fetchedResultsController = [[NSFetchedResultsController alloc] initWithFetchRequest:fetchRequest managedObjectContext:[XMPPRosterCoreDataStorage sharedInstance].mainThreadManagedObjectContext sectionNameKeyPath:nil cacheName:@"contanctCache"];
+        
+        // 设置代理
+        _fetchedResultsController.delegate = self;
+        
+    }
+    return _fetchedResultsController;
+}
+
+#pragma mark --NSFetchedResultsControllerDelegate
+- (void)controllerDidChangeContent:(NSFetchedResultsController *)controller {
+    
+    self.contactDataList = self.fetchedResultsController.fetchedObjects;
+    [self.tableView reloadData];
+}
+
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    // Uncomment the following line to preserve selection between presentations.
-    // self.clearsSelectionOnViewWillAppear = NO;
+    //1,  根据添加取数据
+    // 开始查询数据  performFetch:运行取数据
+    [self.fetchedResultsController performFetch:nil];
     
-    // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-    // self.navigationItem.rightBarButtonItem = self.editButtonItem;
+    // 接收查询到的数据
+    self.contactDataList = self.fetchedResultsController.fetchedObjects;
+    
+    // 刷新数据源
+    [self.tableView reloadData];
 }
 
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
-}
 
+
+
+// 2, 展示数据
 #pragma mark - Table view data source
-
-- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-#warning Incomplete implementation, return the number of sections
-    return 0;
-}
-
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-#warning Incomplete implementation, return the number of rows
-    return 0;
+
+    return self.contactDataList.count;
 }
 
-/*
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:<#@"reuseIdentifier"#> forIndexPath:indexPath];
     
-    // Configure the cell...
+    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"contactCellID" forIndexPath:indexPath];
+    // 获取数据 是实体对象
+    XMPPUserCoreDataStorageObject *object = self.contactDataList[indexPath.row];
+    
+    // 赋值
+    UILabel *name = [cell viewWithTag:1002];
+    name.text = object.jidStr;
+    
+    UILabel *nickName = [cell viewWithTag:1003];
+    nickName.text = object.nickname;
     
     return cell;
 }
-*/
 
-/*
-// Override to support conditional editing of the table view.
-- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath {
-    // Return NO if you do not want the specified item to be editable.
-    return YES;
+#pragma mark - TalbeViewdelegate
+// 设置行高
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
+    
+    return 60;
 }
-*/
 
-/*
-// Override to support editing the table view.
-- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
-    if (editingStyle == UITableViewCellEditingStyleDelete) {
-        // Delete the row from the data source
-        [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
-    } else if (editingStyle == UITableViewCellEditingStyleInsert) {
-        // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-    }   
+
+
+
+// 懒加载
+- (NSArray *)contactDataList {
+    
+    if (!_contactDataList) {
+        _contactDataList = [NSArray array];
+    }
+    return _contactDataList;
 }
-*/
-
-/*
-// Override to support rearranging the table view.
-- (void)tableView:(UITableView *)tableView moveRowAtIndexPath:(NSIndexPath *)fromIndexPath toIndexPath:(NSIndexPath *)toIndexPath {
-}
-*/
-
-/*
-// Override to support conditional rearranging of the table view.
-- (BOOL)tableView:(UITableView *)tableView canMoveRowAtIndexPath:(NSIndexPath *)indexPath {
-    // Return NO if you do not want the item to be re-orderable.
-    return YES;
-}
-*/
-
-/*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
 
 @end

@@ -18,5 +18,6 @@
 
 // XMPPStream
 @property (nonatomic, strong)XMPPStream *xmppStream;
+@property (nonatomic, copy)XMPPRoster *xmppRoster;// 好友列表模块
 
 @end

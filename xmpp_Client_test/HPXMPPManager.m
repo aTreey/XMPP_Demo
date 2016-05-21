@@ -16,6 +16,8 @@
 @property (nonatomic, copy)NSString *password;
 @property (nonatomic, copy)XMPPReconnect *xmppReconnect;
 @property (nonatomic, copy)XMPPAutoPing *xmppAutoping;
+
+
 @end
 
 /***自动连接模块实现步骤***/
@@ -96,6 +98,23 @@ static HPXMPPManager *_sharmanager;
     return _xmppAutoping;
 }
 
+// 好友列表
+- (XMPPRoster *)xmppRoster {
+    
+    if (!_xmppRoster) {
+        _xmppRoster = [[XMPPRoster alloc] initWithRosterStorage:[XMPPRosterCoreDataStorage sharedInstance] dispatchQueue:dispatch_get_main_queue()];
+        
+        // 设置参数
+        _xmppRoster.autoFetchRoster = YES; // 请求还有列表信息
+        _xmppRoster.autoClearAllUsersAndResources = NO; // 离线状态清楚好友
+        _xmppRoster.autoAcceptKnownPresenceSubscriptionRequests = NO; // 自动添加好友
+        // 添加多播代理
+        [_xmppRoster addDelegate:self delegateQueue:dispatch_get_main_queue()];
+        
+    }
+    return _xmppRoster;
+}
+
 //login
 - (void)loginWithJID:(XMPPJID *)jid password:(NSString *)password {
     
@@ -117,7 +136,8 @@ static HPXMPPManager *_sharmanager;
 - (void)activateFuncation {
     
     [self.xmppReconnect activate:self.xmppStream];
-    [self.xmppAutoping activate:self.xmppStream];
+//    [self.xmppAutoping activate:self.xmppStream];
+    [self.xmppRoster activate:self.xmppStream];
 }
 
 #pragma mark -- XMPPReconnect 代理方法
@@ -143,7 +163,7 @@ static HPXMPPManager *_sharmanager;
     
     // 更改出席状态: 只能在非聊天状态下更改
     [presence addChild:[DDXMLElement elementWithName:@"show" stringValue:@"dnd"]];
-    [presence addChild:[DDXMLElement elementWithName:@"status" stringValue:@"¥55¥¥¥"]];
+    [presence addChild:[DDXMLElement elementWithName:@"status" stringValue:@"¥55¥"]];
     
     [self.xmppStream sendElement:presence];
 }

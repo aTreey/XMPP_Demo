@@ -20,8 +20,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    // login
-    [[HPXMPPManager sharedXMPPManager] loginWithJID:[XMPPJID jidWithUser:@"zhang2" domain:@"itheima.cn" resource:nil] password:@"2"];
+    
     
 }
 

@@ -1,4 +1,4 @@
-//
+;//
 //  main.m
 //  xmpp_Client_test
 //

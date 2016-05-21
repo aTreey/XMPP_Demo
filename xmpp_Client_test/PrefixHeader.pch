@@ -11,8 +11,8 @@
 
 
 #import <UIKit/UIKit.h>
-//#import "HPXMPPManager.h"
 #import "XMPPFramework.h"
+#import "HPXMPPManager.h"
 
 
 //#endif /* PrefixHeader_pch */
