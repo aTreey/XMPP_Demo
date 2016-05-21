@@ -9,7 +9,7 @@
 #import "HPContactViewController.h"
 
 
-@interface HPContactViewController ()<NSFetchedResultsControllerDelegate>
+@interface HPContactViewController ()<NSFetchedResultsControllerDelegate, XMPPRosterDelegate>
 @property (nonatomic, strong) NSFetchedResultsController *fetchedResultsController;
 @property (nonatomic, strong) NSArray *contactDataList;
 @end
@@ -64,10 +64,29 @@
     
     // 刷新数据源
     [self.tableView reloadData];
+    
+    // 添加代理
+    [[HPXMPPManager sharedXMPPManager].xmppRoster addDelegate:self delegateQueue:dispatch_get_main_queue()];
 }
 
+#pragma mark -- 添加好友
+- (IBAction)addFriendsBtnDidClick:(id)sender {
+    
+//    // 添加代理
+//    [[HPXMPPManager sharedXMPPManager].xmppRoster addDelegate:self delegateQueue:dispatch_get_main_queue()];
+    
+    [[HPXMPPManager sharedXMPPManager].xmppRoster addUser:[XMPPJID jidWithUser:@"wang2" domain:@"itheima.cn" resource:nil] withNickname:@"电脑message1"];
+}
 
+#pragma mark -- XMPPRosterDelegate
 
+- (void)xmppRoster:(XMPPRoster *)sender didReceivePresenceSubscriptionRequest:
+    // andAddToRoster : 添加到数据库
+
+    (XMPPPresence *)presence {
+    [[HPXMPPManager sharedXMPPManager].xmppRoster acceptPresenceSubscriptionRequestFrom:[XMPPJID jidWithUser:@"wnag2" domain:@"itheima.cn" resource:nil] andAddToRoster:YES];
+    
+}
 
 // 2, 展示数据
 #pragma mark - Table view data source

@@ -23,7 +23,7 @@
             </objects>
             <point key="canvasLocation" x="-1690" y="-164"/>
         </scene>
-        <!--Root View Controller-->
+        <!--好友列表-->
         <scene sceneID="cFy-Pk-tUG">
             <objects>
                 <tableViewController id="BY2-sp-SX8" customClass="HPContactViewController" sceneMemberID="viewController">
@@ -76,11 +76,21 @@
                             <outlet property="delegate" destination="BY2-sp-SX8" id="uOD-4l-blz"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" title="Root View Controller" id="0N2-a9-tvv"/>
+                    <toolbarItems>
+                        <barButtonItem title="添加好友" id="d0I-10-2we"/>
+                    </toolbarItems>
+                    <navigationItem key="navigationItem" title="好友列表" id="Taj-PB-AP6">
+                        <barButtonItem key="rightBarButtonItem" title="添加好友" id="bpm-oE-rUE">
+                            <connections>
+                                <action selector="addFriendsBtnDidClick:" destination="BY2-sp-SX8" id="3r2-2n-ASn"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
+                    <simulatedToolbarMetrics key="simulatedBottomBarMetrics"/>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="suF-sv-iCy" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-224" y="-436"/>
+            <point key="canvasLocation" x="-108" y="-344"/>
         </scene>
         <!--好友列表-->
         <scene sceneID="nf9-qK-tgE">
@@ -97,7 +107,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="U5R-yM-sRT" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-856" y="-360"/>
+            <point key="canvasLocation" x="-833" y="-390"/>
         </scene>
         <!--Root View Controller-->
         <scene sceneID="vru-4r-xkt">
@@ -129,7 +139,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="g8X-fY-c1O" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-23" y="507"/>
+            <point key="canvasLocation" x="-31" y="359"/>
         </scene>
         <!--Chat View Controller-->
         <scene sceneID="9wj-ut-3TT">
@@ -174,7 +184,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="URz-jv-jDd" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-826" y="499"/>
+            <point key="canvasLocation" x="-858" y="327"/>
         </scene>
     </scenes>
 </document>
