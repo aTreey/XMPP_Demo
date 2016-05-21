@@ -12,9 +12,19 @@
 #import "XMPPLogging.h"
 
 
-@interface HPXMPPManager ()<XMPPStreamDelegate>
+@interface HPXMPPManager ()<XMPPStreamDelegate, XMPPReconnectDelegate>
 @property (nonatomic, copy)NSString *password;
+@property (nonatomic, copy)XMPPReconnect *xmppReconnect;
+@property (nonatomic, copy)XMPPAutoPing *xmppAutoping;
 @end
+
+/***自动连接模块实现步骤***/
+/*
+ 1, 导入头文件
+ 2, 创建对象
+ 3, 设置代理
+ 4, 需要激活模块
+*/
 
 @implementation HPXMPPManager
 static HPXMPPManager *_sharmanager;
@@ -46,9 +56,26 @@ static HPXMPPManager *_sharmanager;
         // 使用socket 来实现, 发过来我就能知道
         // delegate获取状态 多播代理, 添加好几个代理
         [_xmppStream addDelegate:self delegateQueue:dispatch_get_main_queue()];
+
     }
     return _xmppStream;
 }
+
+// 自动重连
+- (XMPPReconnect *)xmppReconnect {
+    
+    if (!_xmppReconnect) {
+        _xmppReconnect = [[XMPPReconnect alloc] initWithDispatchQueue:dispatch_get_main_queue()];
+        
+        // 自动重连时间
+        _xmppReconnect.reconnectTimerInterval = 5.0;
+        
+        // 添加多播代理
+        [_xmppReconnect addDelegate:self delegateQueue:dispatch_get_main_queue()];
+    }
+    return _xmppReconnect;
+}
+
 
 //login
 - (void)loginWithJID:(XMPPJID *)jid password:(NSString *)password {
@@ -62,6 +89,14 @@ static HPXMPPManager *_sharmanager;
     //登录之前需要联网
     [self.xmppStream connectWithTimeout:-1 error:0];
     
+    // 激活模块,在登录的时候就激活
+    [self activateFuncation];
+}
+
+// 使用stream 来激活自动重连
+- (void)activateFuncation {
+    
+    [self.xmppReconnect activate:self.xmppStream];
 }
 
 #pragma mark -- XMPPStream的代理方法
@@ -87,6 +122,19 @@ static HPXMPPManager *_sharmanager;
     [presence addChild:[DDXMLElement elementWithName:@"status" stringValue:@"¥55¥¥¥"]];
     
     [self.xmppStream sendElement:presence];
+}
+
+// 接收消息后
+- (void)xmppStream:(XMPPStream *)sender didReceiveMessage:(XMPPMessage *)message {
+    
+    NSLog(@"++接收消息后++");
+}
+
+//发送消息后调用
+- (void)xmppStream:(XMPPStream *)sender didSendMessage:(XMPPMessage *)message {
+    
+    
+    NSLog(@"====发送后====");
 }
 
 @end

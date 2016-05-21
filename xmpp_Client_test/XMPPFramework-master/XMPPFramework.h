@@ -24,7 +24,11 @@
 
 #import "XMPP.h"
 
- 
+// 自动重连
+#import "XMPPReconnect.h"
+
+// 心跳检测
+#import "XMPPAutoPing.h"
 // List the modules you're using here:
 // (the following may not be a complete list)
 

@@ -9,8 +9,10 @@
 //#ifndef PrefixHeader_pch
 //#define PrefixHeader_pch
 
-#import "XMPPFramework.h"
+
 #import <UIKit/UIKit.h>
+//#import "HPXMPPManager.h"
+#import "XMPPFramework.h"
 
 
 //#endif /* PrefixHeader_pch */
